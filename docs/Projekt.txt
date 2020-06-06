@@ -1,0 +1,23 @@
+----Projekt--------------------------------------------------------------------------------------------
+1.Specyfikacja zewnetrzna - wymagania klienta sformu³owane w jêzyku dla klienta zrozumia³ym (SIWZ)
+| +-opis obiektu
+| +-okreslenie celu sterowania (glowny)
+| | +-cel glowny
+| | +-okreslenie ilosciowe wymaganej precyzji
+| +-wymagania specjalne 
+| +-ograniczenia kosztowe i terminowe
+| +-aspekty prawne
+| | +-gwarancje
+| | +-utrzymanie i rozwoj
+| | +-wlasnosci intelektualne
+2.Specyfikacja wewnetrzna - przek³ada specyfikacje zewnetrzna na konkretne rozwiazania.
+| +-wymagania pomiarowe i sprzetu automatyki
+| +-dobor aparatury z uzasadnieniem
+| +-koncepcja sterowania (teoretyczna, czyli projekt ukladu)
+| +-okreœlenie efektywnoœci
+| +-wycena projektu i jego implementacja
+3.Badania symulacyjne
+| +-modelowanie procesu
+| +-plan eksperymentu symulacyjnego
+| +-omowienie rezultatow
+-------------------------------------------------------------------------------------------------------
