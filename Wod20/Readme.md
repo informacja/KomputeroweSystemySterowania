@@ -10,4 +10,4 @@
 
 ## Main Topic 2
 
-*XMind - Trial Version*
+![7years](docs/7y.png)
