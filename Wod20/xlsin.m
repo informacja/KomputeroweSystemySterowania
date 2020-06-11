@@ -7,7 +7,7 @@ if ~exist( 'x','var') % jeœli jeszcze nie s¹, za³aduj dane z pliku
     x = []; y = [];
     for i = Ystart:Ystop  
     %     x = importfile('Raport_Pomiarow.xls', string(i));
-        x = [x; importCelsjusz('Raport_Pomiarow_anonim.xls', string(i))];
+        x = [x; importRaport_Pomiarow('Raport_Pomiarow_anonim.xls', string(i))];
         y = [y; size(x(:,7),1)];
     end
 end
