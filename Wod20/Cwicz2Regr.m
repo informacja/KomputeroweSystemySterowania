@@ -1,3 +1,8 @@
+% Cel:
+% Czy cykl roczny jest istotny? 7 14 21
+%   CSV wygenerowaæ
+%   naprawiæ wykresy
+%   dobraæ harmoniczne
 clear all; %Cwicz2Regr
 
 if (~verLessThan('matlab', '8.4'))
@@ -125,7 +130,7 @@ figure(2), subplot(2, 1, 2), plot(x, Yemp, kol1, v, yo, 'r', x, E, 'k', v, z, 'g
 plot(v, yo + sigYv, 'b:', v, yo - sigYv, 'b:');
 plot(v, yo + sigYE, 'm:', v, yo - sigYE, 'm:');
 xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd));
-axis('tight'); title('Poza polem korelacji'); hold off;
+axis('tight'); title('AR Poza polem korelacji'); hold off;
 
 % end
 return
