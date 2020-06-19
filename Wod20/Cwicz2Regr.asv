@@ -5,27 +5,36 @@
 %   dobraæ harmoniczne
 clear all; %Cwicz2Regr
 
-if (~verLessThan('matlab', '8.4'))
+if (verLessThan('matlab', '8.4')) % for MATLAB 2010
+%     filename = '2018_space.csv'; delimiterIn = ',';
+%     data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
+    load('time_data.mat')
+    x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
+    L = length(x);
+    T = max(x) - min(x) + 1;
+    L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
+    time = x;
+
+else
     [time, data] = loadEmp(2013, 2019, 'Raport_Pomiarow_anonim.xls'); % lata od 2013 do 2019
     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
 
     if (length(x) == length(unique(x))) fprintf(1, "ok")% To do
-    else length(unique(x))
+    else length(unique(x)); error ("kilka pomiarów jednego dnia");
     end
-
-else % for MATLAB 2010
-    filename = '2018_space.csv'; delimiterIn = ',';
-    data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
-    L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
-    time = x;
 end
+%----------------------------------------------------------------------
 
-L = length(x);
-T = max(x) - min(x) + 1;
+
+%---------
+% srednia
+%---------
+
 % ------------------------------------------------------------------------
 Ldanych = length(x); % size(x, 2);
 Yemp = dtrend(data, 1); sigYf = std(Yemp);
-figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); title('Dziedzina czasu'); yaxis
+figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
+ylabel('Temperatura *C'); legend(sprintf('Œrednia = %i', mean(Yemp))); title('Dziedzina czasu');
 Ah = abs(fft(Yemp / Ldanych)); Ah = Ah(1:round(Ldanych / 2)); %nie dzia³a round w matlab 2010
 nrOm = find(Ah > 2.5 * mean(Ah)) - 1;
 subplot(2, 1, 2), plot(Ah); axis('tight'); title('Dziedzina czêstotliwoœci');
@@ -109,7 +118,7 @@ end
 fprintf(1, '\n alf=%.4f Talf=%.3f Kz=%.3f\n', alf, Talf, Kz)
 
 xmin = min(x); xmax = max(x);
-Ldim = 2000; Xmin = xmin; Xmax = xmax * 1.3;
+Ldim = 2000; Xmin = xmin; Xmax = xmin + T * 1.3;
 dv = (Xmax - Xmin) / (Ldim - 1); v = [Xmin:dv:Xmax];
 z0 = 0; z(Ldim) = 0;
 
