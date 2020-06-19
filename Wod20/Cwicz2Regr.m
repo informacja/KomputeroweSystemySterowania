@@ -5,7 +5,7 @@
 %   dobraæ harmoniczne
 clear all; %Cwicz2Regr
 
-if (verLessThan('matlab', '8.4')) % for MATLAB 2010
+if (~verLessThan('matlab', '8.4')) % for MATLAB 2010
 %     filename = '2018_space.csv'; delimiterIn = ',';
 %     data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
     load('time_data.mat')
@@ -15,13 +15,12 @@ if (verLessThan('matlab', '8.4')) % for MATLAB 2010
     L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
     time = x;
 
-else
+else % for MATLAB 2020
     [time, data] = loadEmp(2013, 2019, 'Raport_Pomiarow_anonim.xls'); % lata od 2013 do 2019
     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
 
-    if (length(x) == length(unique(x))) fprintf(1, "ok")% To do
-    else length(unique(x)); error ("kilka pomiarów jednego dnia");
-    end
+    if (length(x) == length(unique(x))) fprintf(1, "ok - 1 pomiar dziennie")% To do
+    else length(unique(x)); error ("kilka pomiarów jednego dnia lub inny powód powtórzeñ w wektorze [time]");  end
 end
 %----------------------------------------------------------------------
 
@@ -42,7 +41,7 @@ subplot(2, 1, 2), plot(Ah); axis('tight'); title('Dziedzina czêstotliwoœci');
 % G³êbokie myœlenie = prezentacja danych + wyobra¿enia
 kol1 = 'r*'; if(Ldanych > 80) kol1 = 'r.'; end
 figure(2), subplot(2, 1, 1);
-plot(x, Yemp, kol1); xlabel('Numer wêz³a'); ylabel('odchy³ temperatury [*C]'); title('Trend usuniêty'); hold on
+plot(x, Yemp, kol1);  ylabel('[*C]'); title('Trend usuniêty'); hold on
 
 % z = input(' ? jaka to funkcja ? !!!  <Ent> - co mogloby byc ?');
 
