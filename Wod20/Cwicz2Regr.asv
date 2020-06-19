@@ -1,43 +1,65 @@
 % Cel:
 % Czy cykl roczny jest istotny? 7 14 21
-%   CSV wygenerowaæ
-%   naprawiæ wykresy
-%   dobraæ harmoniczne
+% +  CSV wygenerowaæ - > time_data.mat
+% +  naprawiæ wykresy
+%   dobraæ harmoniczne (cel czy cykl roczny jest istotny) brak
+%   harmonicznych
+%   uzup³niæ brak pomiarów
+% montecarlon
 clear all; %Cwicz2Regr
 
-if (~verLessThan('matlab', '8.4')) % for MATLAB 2010
-%     filename = '2018_space.csv'; delimiterIn = ',';
-%     data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
-    load('time_data.mat')
-    x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
-    L = length(x);
-    T = max(x) - min(x) + 1;
-    L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
-    time = x;
 
-else
-    [time, data] = loadEmp(2013, 2019, 'Raport_Pomiarow_anonim.xls'); % lata od 2013 do 2019
-    x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
 
-    if (length(x) == length(unique(x))) fprintf(1, "ok")% To do
-    else length(unique(x)); error ("kilka pomiarów jednego dnia");
-    end
-end
+% if (verLessThan('matlab', '8.4')) % for MATLAB 2010
+% %     filename = '2018_space.csv'; delimiterIn = ',';
+% %     data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
+%     load('time_data.mat')
+%     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
+%     L = length(x);
+%     T = max(x) - min(x) + 1;
+%     L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
+% %     time = x;
+% 
+% else % for MATLAB 2020
+%     [time, data] = loadEmp(2013, 2019, 'Raport_Pomiarow_anonim.xls'); % lata od 2013 do 2019
+%     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
+% 
+%     if (length(x) == length(unique(x))) fprintf(1, 'ok - 1 pomiar dziennie')% To do
+%     else length(unique(x)); error ('kilka pomiarów jednego dnia lub inny powód powtórzeñ w wektorze [time]');  end
+% end
 %----------------------------------------------------------------------
 
+%[rTemp,Temp,nTim,czas,lTim,lrT]=dane1()
+[Yemp,data,time,x,lTim,lrT]=dane1(); 
+% ------------------------------------------------------------------------
+Ldanych = length(x); % size(x, 2);
+T = max(x) - min(x) + 1;
+Yemp = dtrend(Yemp, 1); sigYf = std(Yemp);
+figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
+ylabel('Temperatura *C'); legend(sprintf('Œrednia = %i', mean(Yemp))); title('Dziedzina czasu');
+Ah = abs(fft(Yemp / Ldanych)); Ah = Ah(1:round(Ldanych / 6)); %nie dzia³a round w matlab 2010
+nrOm = find(Ah > 4.7 * mean(Ah)) - 1;
+subplot(2, 1, 2), plot(Ah,'k.-'); axis('tight'); title('Dziedzina czêstotliwoœci'); 
 
 %---------
 % srednia
 %---------
+% input('srednia ruchoma');
+%% sr +-2
+[m,n] = size(Yemp);
+y1 = Yemp';
+y2 = zeros(m,n);
+v = 2;
+for i = v+1:(n-v)    
+    sum = y1(i);
+    for (w = 1:v)
+       sum = sum + (y1(i-w) + y1(i+w));
+    end
+    y2(i) = sum/(v+3);
+end
 
-% ------------------------------------------------------------------------
-Ldanych = length(x); % size(x, 2);
-Yemp = dtrend(data, 1); sigYf = std(Yemp);
-figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
-ylabel('Temperatura *C'); legend(sprintf('Œrednia = %i', mean(Yemp))); title('Dziedzina czasu');
-Ah = abs(fft(Yemp / Ldanych)); Ah = Ah(1:round(Ldanych / 2)); %nie dzia³a round w matlab 2010
-nrOm = find(Ah > 2.5 * mean(Ah)) - 1;
-subplot(2, 1, 2), plot(Ah); axis('tight'); title('Dziedzina czêstotliwoœci');
+% Yemp = y2
+
 
 % G³êbokie myœlenie = prezentacja danych + wyobra¿enia
 kol1 = 'r*'; if(Ldanych > 80) kol1 = 'r.'; end
@@ -47,14 +69,15 @@ plot(x, Yemp, kol1);  ylabel('[*C]'); title('Trend usuniêty'); hold on
 % z = input(' ? jaka to funkcja ? !!!  <Ent> - co mogloby byc ?');
 
 % za³. funkcji harmonicznej
-% Nrom = nrOm; %[1 2 5 20 36 42 134 236 500 600];
+nrOm = [7 14 21 28 56]; %nrOm; %[1 2 5 20 36 42 134 236 500 600];
 
 om = 2 * pi / T * nrOm;
 % %% Projekt modelu - oblicz FId
 [FId, Ldanych, Lh, Kd] = modelRharm(x, om); % za³. funkcji harmonicznej
 % =============== wybieramy model: Lhm i Km ===================
-Lhm = 3;
+Lhm = 5;
 % =============================================================
+Yemp=Yemp';
 Km = 2 * Lhm; % Przyjety (arbitralnie) rzad modelu  Kolumny Macierzy
 FI(:, 1:Km) = FId(:, 1:Km);
 % dalej ju¿ tylko numeryka i grafika
