@@ -1,11 +1,11 @@
-% Cel:
+%  Cel:
 % Czy cykl roczny jest istotny? 7 14 21
 % +  CSV wygenerowaæ - > time_data.mat
 % +  naprawiæ wykresy
 %   dobraæ harmoniczne (cel czy cykl roczny jest istotny) brak
 %   harmonicznych
-%   uzup³niæ brak pomiarów
-% montecarlon
+%   uzup³niæ brak pomiarów z regresji do fft
+%    montecarlo
 clear all; %Cwicz2Regr
 
 
@@ -31,16 +31,24 @@ clear all; %Cwicz2Regr
 
 %[rTemp,Temp,nTim,czas,lTim,lrT]=dane1()
 [Yemp,data,time,x,lTim,lrT]=dane1(); 
+% [size(Yemp);size(data);size(time);size(x);size(lTim);size(lrT)] % debug
 % ------------------------------------------------------------------------
 Ldanych = length(x); % size(x, 2);
 T = max(x) - min(x) + 1;
 Yemp = dtrend(Yemp, 1); sigYf = std(Yemp);
 figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
-ylabel('Temperatura *C'); legend(sprintf('Œrednia = %i', mean(Yemp))); title('Dziedzina czasu');
-Ah = abs(fft(Yemp / Ldanych)); Ah = Ah(1:round(Ldanych / 6)); %nie dzia³a round w matlab 2010
-nrOm = find(Ah > 4.7 * mean(Ah)) - 1;
-subplot(2, 1, 2), plot(Ah,'k.-'); axis('tight'); title('Dziedzina czêstotliwoœci'); 
+ylabel('Temperatura *C'); title('Dziedzina czasu');
+Ah = abs(fft(Yemp / Ldanych));  Ah = Ah(1:round(Ldanych / 6)); %nie dzia³a round w matlab 2010
+acept_level = 4.5 * mean(Ah); A(1:length(Ah)) = acept_level;
+f0 = find(max(Ah) == Ah); % cykl roczny
+harm = [Ah(f0:f0:end)] % To DO uwzglêdniaj harmoniczne roczne w modelu
+nrOm = find(Ah > acept_level) - 1; 
+subplot(2, 1, 2),   plot([1:length(Ah)],Ah(1:end),'k.-',nrOm+1,Ah(nrOm+1),'g^',1:length(Ah),A,'r--');  
 
+% plot(Ah([7 14]),'go'); plot([acept_level acept_level],'g:');
+% axis('tight');
+ylabel('Amplituda'); xlabel(sprintf(' Proponowane %i silne harmoniczne jako bazowa nr = %s ',length(nrOm),  mat2str(nrOm))); title('Dziedzina czêstotliwoœci'); 
+legend('g^ Proponowane\nro Wybrane');
 %---------
 % srednia
 %---------
