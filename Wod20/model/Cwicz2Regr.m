@@ -35,7 +35,7 @@ clear all; %Cwicz2Regr
 % ------------------------------------------------------------------------
 % UWAGA do widma furerowiskiego musi byæ spe³nione za³o¿enie o równomiernym
 % próbkowaniu, poni¿sza linia jest tylko gdzy harmoniczne ju¿ znamy 
-Yemp = data; x = time; % podmian na dane z dziurami do modelu regresjnego 
+% Yemp = data; x = time; % podmian na dane z dziurami do modelu regresjnego 
 Ldanych = length(x); % size(x, 2);
 T = max(x) - min(x) + 1; sred_temp = mean(Yemp);
 Yemp = dtrend(Yemp, 1); sredAfterDentrend = mean(Yemp);
