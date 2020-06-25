@@ -33,9 +33,6 @@ clear all; %Cwicz2Regr
 [Yemp,data,time,x,lTim,lrT]=dane1(); 
 % [size(Yemp);size(data);size(time);size(x);size(lTim);size(lrT)] % debug
 % ------------------------------------------------------------------------
-% UWAGA do widma furerowiskiego musi byæ spe³nione za³o¿enie o równomiernym
-% próbkowaniu, poni¿sza linia jest tylko gdzy harmoniczne ju¿ znamy 
-Yemp = data; x = time; % podmian na dane z dziurami do modelu regresjnego 
 Ldanych = length(x); % size(x, 2);
 T = max(x) - min(x) + 1; sred_temp = mean(Yemp);
 Yemp = dtrend(Yemp, 1); sredAfterDentrend = mean(Yemp);
@@ -85,7 +82,7 @@ nrOm = [7 14 21 28 56]; %nrOm; %[1 2 5 20 36 42 134 236 500 600];
 
 om = 2 * pi / T * nrOm;
 % %% Projekt modelu - oblicz FId
-[FId, Ldanych, Lh, Kd] = modelRharm(x, om); % za³. funkcji harmonicznej
+[FId, Ldanych, Lh, Kd] = modelRharm(data, om); % za³. funkcji harmonicznej
 % dodaæ dane z dziurami
 % =============== wybieramy model: Lhm i Km ===================
 Lhm = 5;
@@ -176,7 +173,7 @@ figure(2), subplot(2, 1, 2), plot(x, Yemp, kol1, v, yo, 'r', x, E, 'k', v, z, 'g
 plot(v, yo + sigYv, 'b:', v, yo - sigYv, 'b:');
 plot(v, yo + sigYE, 'm:', v, yo - sigYE, 'm:');
 xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd));
-axis('tight'); title('co dalej ??'); hold off;
+axis('tight'); title('AR Poza polem korelacji'); hold off;
 
 % end
 return
