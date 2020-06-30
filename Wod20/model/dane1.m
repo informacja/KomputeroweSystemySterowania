@@ -28,7 +28,7 @@ for(i=2:lTim)
     if(nTim(i)-nTim(i-1)==1) k=k+1; rTemp(k)=Temp(i); 
     else
         dn=nTim(i)-nTim(i-1); bT=(Temp(i)-Temp(i-1))/dn; 
-        for(n=0:dn-1) k=k+1; rTemp(k)=Temp(i-1)+bT*n; end
+        for(n=1:dn) k=k+1; rTemp(k)=Temp(i-1)+bT*n; end
     end
 end
 lrT=k; czas=[1:lrT] 

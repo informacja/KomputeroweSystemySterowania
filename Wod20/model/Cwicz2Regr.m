@@ -41,7 +41,7 @@ T = max(x) - min(x) + 1; sred_temp = mean(Yemp);
 Yemp = dtrend(Yemp, 1); sredAfterDentrend = mean(Yemp);
 sigYf = std(Yemp);
 figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
-ylabel('Temperatura *C'); ylabel(sprintf("Œrednia temperatura %d", sred_temp)); title('Dziedzina czasu');
+ylabel('Temperatura *C'); xlabel(sprintf("Œrednia temperatura %d", sred_temp)); title('Dziedzina czasu');
 Ah = abs(fft(Yemp / Ldanych));  Ah = Ah(1:round(Ldanych / 6)); %nie dzia³a round w matlab 2010
 acept_level = 4.5 * mean(Ah); A(1:length(Ah)) = acept_level;
 f0 = find(max(Ah) == Ah); % cykl roczny
