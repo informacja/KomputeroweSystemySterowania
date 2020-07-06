@@ -1,33 +1,15 @@
 %  Cel:
 % Czy cykl roczny jest istotny? 7 14 21
-% +  CSV wygenerowaæ - > time_data.mat
-% +  naprawiæ wykresy
-% +  dobraæ harmoniczne (cel czy cykl roczny jest istotny) brak harmonicznych
+% + CSV wygenerowaæ - > time_data.mat
+% + naprawiæ wykresy
+%   dobraæ harmoniczne (cel czy cykl roczny jest istotny) brak
+%   harmonicznych
 %   uzup³niæ brak pomiarów z regresji do fft
 %   montecarlo
 clear all; %Cwicz2Regr
 
-% if (verLessThan('matlab', '8.4')) % for MATLAB 2010
-% %     filename = '2018_space.csv'; delimiterIn = ',';
-% %     data = importdata(filename, delimiterIn)'; % wektor pionowy (szafa)
-%     load('time_data.mat')
-%     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
-%     L = length(x);
-%     T = max(x) - min(x) + 1;
-%     L = length(data); x = [1:L]; tR = x; % generowanie numeru próbki dla MatLab 2010
-% %     time = x;
-% 
-% else % for MATLAB 2020
-%     [time, data] = loadEmp(2013, 2019, 'Raport_Pomiarow_anonim.xls'); % lata od 2013 do 2019
-%     x = datenum(time'); tR = [1:max(x) - min(x) + 2]; % time Real
-% 
-%     if (length(x) == length(unique(x))) fprintf(1, 'ok - 1 pomiar dziennie')% To do
-%     else length(unique(x)); error ('kilka pomiarów jednego dnia lub inny powód powtórzeñ w wektorze [time]');  end
-% end
-%----------------------------------------------------------------------
-
 %[rTemp,Temp,nTim,czas,lTim,lrT]=dane1()
-[Yemp,data,time,x,lTim,lrT]=dane1(); 
+[Yemp,data,time,x,lTim,lrT]=dane(); 
 % [size(Yemp);size(data);size(time);size(x);size(lTim);size(lrT)] % debug
 % ------------------------------------------------------------------------
 % UWAGA do widma furerowiskiego musi byæ spe³nione za³o¿enie o równomiernym
@@ -55,8 +37,6 @@ legend('g^ Proponowane\nro Wybrane');
 kol1 = 'r*'; if(Ldanych > 80) kol1 = 'r.'; end
 figure(2), subplot(2, 1, 1);
 plot(x, Yemp, kol1);  ylabel('[*C]'); title('G³êbokie myœlenie = prezentacja danych + wyobra¿enia'); hold on
-
-% z = input(' ? jaka to funkcja ? !!!  <Ent> - co mogloby byc ?');
 
 % za³. funkcji harmonicznej
 nrOm = [7 14 21 28 56]; %nrOm; %[1 2 5 20 36 42 134 236 500 600];
@@ -155,7 +135,8 @@ plot(v, yo + sigYv, 'b:', v, yo - sigYv, 'b:');
 plot(v, yo + sigYE, 'm:', v, yo - sigYE, 'm:');
 xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd));
 axis('tight'); title('co dalej ??'); hold off;
-yearProgno = [1:365:Xmax]; xticks(yearProgno);
-xticklabels(round(yearProgno/366)+2013)
+xticks([1:Xmax])
+xticklabels({'-3\pi','-2\pi','-\pi','0','\pi','2\pi','3\pi'})
+
 % end
 return
