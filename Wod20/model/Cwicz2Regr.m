@@ -27,7 +27,7 @@ clear all; %Cwicz2Regr
 %----------------------------------------------------------------------
 
 %[rTemp,Temp,nTim,czas,lTim,lrT]=dane1()
-[Yemp,data,time,x,lTim,lrT]=dane1(); 
+[Yemp,data,time,x,lTim,lrT]=dane(); 
 % [size(Yemp);size(data);size(time);size(x);size(lTim);size(lrT)] % debug
 % ------------------------------------------------------------------------
 % UWAGA do widma furerowiskiego musi byæ spe³nione za³o¿enie o równomiernym
