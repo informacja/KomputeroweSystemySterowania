@@ -149,12 +149,12 @@ for (i = 1:Ldim)
     z0 = z(i);
 end
 
-figure(2), subplot(2, 1, 2), plot(x, Yemp, kol1, v, yo, 'r', x, E, 'k', v, z, 'g'); hold on;
+figure(2), subplot(2, 1, 2), plot(x, Yemp+sred_temp, kol1, v, yo+sred_temp, 'r', x, E+sred_temp, 'k', v, z+sred_temp, 'g'); hold on;
 %input(' co dalej ?? ');
-plot(v, yo + sigYv, 'b:', v, yo - sigYv, 'b:');
-plot(v, yo + sigYE, 'm:', v, yo - sigYE, 'm:');
-xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd));
-axis('tight'); title('co dalej ??'); hold off;
+plot(v, yo + sigYv+sred_temp, 'b:', v, yo - sigYv+sred_temp, 'b:');
+plot(v, yo + sigYE+sred_temp, 'm:', v, yo - sigYE+sred_temp, 'm:');
+xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd)); ylabel([ '[' char(176) 'C]']);
+axis('tight'); title('Prognoza temperatury wody (Laboratorium £ukanowice)'); hold off;
 yearProgno = [1:365:Xmax]; xticks(yearProgno);
 xticklabels(round(yearProgno/366)+2013)
 % end
