@@ -31,14 +31,15 @@ clear all; %Cwicz2Regr
 % [size(Yemp);size(data);size(time);size(x);size(lTim);size(lrT)] % debug
 % ------------------------------------------------------------------------
 % UWAGA do widma furerowiskiego musi byæ spe³nione za³o¿enie o równomiernym
-% próbkowaniu, poni¿sza linia jest tylko gdzy harmoniczne ju¿ znamy 
-% Yemp = data; x = time; % podmian na dane z dziurami do modelu regresjnego 
+% próbkowaniu, poni¿sza linia jest tylko gdy harmoniczne ju¿ znamy 
+% Yemp = data; x = time; % podmian na dane z dziurami do modelu regresjnego
+% ------------------------------------------------------------------------
 Ldanych = length(x); % size(x, 2);
 T = max(x) - min(x) + 1; sred_temp = mean(Yemp);
-Yemp = dtrend(Yemp, 1); sredAfterDentrend = mean(Yemp);
+Yemp = dtrend(Yemp, 1); %sredAfterDentrend = mean(Yemp);
 sigYf = std(Yemp);
 figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
-ylabel('Temperatura *C'); xlabel(sprintf("Œrednia temperatura %d", sred_temp)); title('Dziedzina czasu');
+ylabel('Temperatura *C'); xlabel(sprintf("Œrednia temperatura %.2f ", sred_temp)); title('Dziedzina czasu');
 Ah = abs(fft(Yemp / Ldanych));  Ah = Ah(1:round(Ldanych / 6)); %nie dzia³a round w matlab 2010
 acept_level = 4.5 * mean(Ah); A(1:length(Ah)) = acept_level;
 f0 = find(max(Ah) == Ah); % cykl roczny
@@ -153,9 +154,10 @@ figure(2), subplot(2, 1, 2), plot(x, Yemp+sred_temp, kol1, v, yo+sred_temp, 'r',
 %input(' co dalej ?? ');
 plot(v, yo + sigYv+sred_temp, 'b:', v, yo - sigYv+sred_temp, 'b:');
 plot(v, yo + sigYE+sred_temp, 'm:', v, yo - sigYE+sred_temp, 'm:');
-xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd)); ylabel([ '[' char(176) 'C]']);
+xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd)); ylabel([ 'Temperatura wody [' char(176) 'C]']);
 axis('tight'); title('Prognoza temperatury wody (Laboratorium £ukanowice)'); hold off;
 yearProgno = [1:365:Xmax]; xticks(yearProgno);
-xticklabels(round(yearProgno/366)+2013)
-% end
-return
+xticklabels(round(yearProgno/366)+2013)% end
+% return
+[a,fname,c] = fileparts( mfilename('fullpath'));  % nazwa tego m-pliku
+print( strcat(fname,'.png'),'-dpng');
