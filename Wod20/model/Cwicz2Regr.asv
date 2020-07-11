@@ -156,21 +156,11 @@ plot(v, yo + sigYv+sred_temp, 'b:', v, yo - sigYv+sred_temp, 'b:');
 plot(v, yo + sigYE+sred_temp, 'm:', v, yo - sigYE+sred_temp, 'm:');
 xlabel(sprintf('Ldanych=%d sigYf=%.3f sigEo=%.3f Km=%d udz.DyzychE=%.1f%%', Ldanych, sigYf, sigEo, Km, uLd)); ylabel([ 'Temperatura wody [' char(176) 'C]']);
 axis('tight'); title('Prognoza temperatury wody (Laboratorium £ukanowice)'); hold off;
-legend('Pomiary empiryczne','yo trend','E','zak³ucenia')
 yearProgno = [1:365:Xmax]; xticks(yearProgno);
 xticklabels(round(yearProgno/366)+2013)% end
 
-tempe = Yo(1:365)+sred_temp
-Ttyg = []
-for (t = 1:52)
-    Mdt = 0;
-    for d = 1:7
-        Mdt = Mdt + tempe(7*(t-1)+d);
-    end    
-    Ttyg(t) = Mdt/7;
-end
-Ttyg = Ttyg'; 
-clipboard ('copy',Ttyg');
+
+clipboard ('copy',yo[end-36end]+sred_temp);
 return
 [a,fname,c] = fileparts( mfilename('fullpath'));  % nazwa tego m-pliku
 print( strcat(fname,'.png'),'-dpng');              % zapisz ostatn¹ figurê
