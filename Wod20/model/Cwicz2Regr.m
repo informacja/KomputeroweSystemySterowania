@@ -3,7 +3,7 @@
 % +  CSV wygenerowaæ - > time_data.mat
 % +  naprawiæ wykresy
 % +  dobraæ harmoniczne (cel czy cykl roczny jest istotny) brak harmonicznych
-%   uzup³niæ brak pomiarów z regresji do fft
+% + uzup³niæ brak pomiarów z regresji do fft
 %   montecarlo
 clear all; %Cwicz2Regr
 

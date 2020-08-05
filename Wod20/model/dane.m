@@ -16,19 +16,19 @@ for(i=2:ldt)
     Time(i)=time(i)+sumdt;  
 end
 lr=5; % liczba rysunków
-figure(99)
-subplot(lr,1,1); plot(Time,Time,'k',Time,time,'r'); title('Z³¹czenie danych rocznych 2013-2019');  ylabel('Nr dnia'); xlabel(sprintf('Liczba danych = %d', length(time)));
+% figure(99)
+% subplot(lr,1,1); plot(Time,Time,'k',Time,time,'r'); title('Z³¹czenie danych rocznych 2013-2019');  ylabel('Nr dnia'); xlabel(sprintf('Liczba danych = %d', length(time)));
 dTim=diff(Time); nluk=find(dTim>1 | dTim<1);
-subplot(lr,1,2); plot(Time(nluk),dTim(nluk),'ko'); title('Aberracje pomiarów   <1 zostan¹ pominiête, (zero - pomiary wykonane jednego dnia; ujemne - b³¹d kolejnoœci'); ylabel('Odstêp [dni]'); xlabel('Czas [doba]'); ylabel('Odstêp [dni]')
+% subplot(lr,1,2); plot(Time(nluk),dTim(nluk),'ko'); title('Aberracje pomiarów   <1 zostan¹ pominiête, (zero - pomiary wykonane jednego dnia; ujemne - b³¹d kolejnoœci'); ylabel('Odstêp [dni]'); xlabel('Czas [doba]'); ylabel('Odstêp [dni]')
 dobre=find(dTim>=1); Temp=data(dobre+1); nTim=Time(dobre+1);  xlabel(sprintf('Ldobre = %d, Lluk = %d, Lodrzuconych = %d', length(Temp), length(nluk), length(time)-1-length(Temp)));
-subplot(lr,1,3); plot(nTim,Temp,'k.-'); title('2-wie temperatury b³êdne( piki wynikaj¹ce z braku przecinka przy wprowdaniu w labolatorium'); ylabel([ '[' char(176) 'C]']); 
+% subplot(lr,1,3); plot(nTim,Temp,'k.-'); title('2-wie temperatury b³êdne( piki wynikaj¹ce z braku przecinka przy wprowdaniu w labolatorium'); ylabel([ '[' char(176) 'C]']); 
 popr=find(Temp>=1 & Temp<30); Temp=Temp(popr); nTim=nTim(popr); xlabel(sprintf('Ldanych = %d', length(nTim))); 
 dTim=diff(nTim); 
 if(~isempty(find(dTim<1)))
     dobre=find(dTim>=1); % find(dTim<1)
     Temp=Temp(dobre+1); nTim=nTim(dobre+1); 
 end
-subplot(lr,1,4); hold on; plot(nTim,Temp,'r.'); title('Zakceptowane próbki'); hold off; ylabel([ '[' char(176) 'C]']); 
+% subplot(lr,1,4); hold on; plot(nTim,Temp,'r.'); title('Zakceptowane próbki'); hold off; ylabel([ '[' char(176) 'C]']); 
 lTim=length(nTim); k=1; rTemp(k)=Temp(1); 
 for(i=2:lTim) 
     if(nTim(i)-nTim(i-1)==1) k=k+1; rTemp(k)=Temp(i);
@@ -40,7 +40,7 @@ end
 k=k+1;  rTemp(k)=7.3;
 lrT=k; czas=[1:lrT]; 
 
-subplot(lr,1,5); plot(czas,rTemp,'k.-');  title('Przygotowane dane do modelu (braki zosta³y interpolowane) (redundancje - pominiête)');ylabel([ '[' char(176) 'C]']); xlabel(sprintf('Ldanych = %d', lrT)); 
-% return
+% subplot(lr,1,5); plot(czas,rTemp,'k.-');  title('Przygotowane dane do modelu (braki zosta³y interpolowane) (redundancje - pominiête)');ylabel([ '[' char(176) 'C]']); xlabel(sprintf('Ldanych = %d', lrT)); 
+return
 [a,fname,c] = fileparts( mfilename('fullpath'));  % nazwa tego m-pliku
 print( strcat(fname,'.png'),'-dpng');
