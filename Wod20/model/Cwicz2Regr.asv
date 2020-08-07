@@ -36,7 +36,7 @@ clear all; %Cwicz2Regr
 % ------------------------------------------------------------------------
 Ldanych = length(x); % size(x, 2);
 T = max(x) - min(x) + 1; sred_temp = mean(Yemp);
-Yemp = dtrend(Yemp, 1); %sredAfterDentrend = mean(Yemp);
+% Yemp = dtrend(Yemp, 1); %sredAfterDentrend = mean(Yemp);
 sigYf = std(Yemp);
 figure(1), subplot(2, 1, 1), plot(time, data); axis('tight'); 
 ylabel('Temperatura *C'); xlabel(sprintf("Œrednia temperatura %.2f ", sred_temp)); title('Dziedzina czasu');
@@ -46,21 +46,18 @@ f0 = find(max(Ah) == Ah); % cykl roczny
 harm = [Ah(f0:f0:end)] % To DO uwzglêdniaj harmoniczne roczne w modelu
 nrOm = find(Ah > acept_level) - 1; 
 subplot(2, 1, 2),   plot([1:length(Ah)],Ah(1:end),'k.-',nrOm+1,Ah(nrOm+1),'g^',1:length(Ah),A,'r--');  
+vi(length(Yemp)) = 0;
+for (i = 1:length(Yemp))
+    vi(i) = mean(Yemp(1:i)) / std(Yemp(1:i)) ;
+end
 
 % plot(Ah([7 14]),'go'); plot([acept_level acept_level],'g:');
 % axis('tight');
 ylabel('Amplituda'); xlabel(sprintf(' Proponowane %i silne harmoniczne jako bazowa nr = %s ',length(nrOm),  mat2str(nrOm))); title('Dziedzina czêstotliwoœci'); 
 legend('g^ Proponowane\nro Wybrane');
-%% Eliminacja zmiennych quasi-sta³ych
-vi(length(data)) = 0;
-for (i = 1:length(data))
-    vi(i) = mean(data(1:i)) / std(data(1:i)) ;
-end
-
-figure(22), plot([1:length(data)],vi(1:end),[1 length(data)],[mean(data)/std(data) mean(data)/std(data)],'r--')
-title('zmiennoœæ danych opisuj¹cych (œredna/odchylenie stanadrdowe)'); 
-xlabel('pytanie kiedy przerwaæ? Ile lat wystarczy by iloœæ danych uznaæ za wystarczaj¹c¹? [dni]')
-%% G³êbokie myœlenie = prezentacja danych + wyobra¿enia
+figure(22), plot([1:length(Yemp)],vi(1:end),[1 length(Yemp)],[mean(Yemp)/std(Yemp) mean(Yemp)/std(Yemp)],'r')
+title('zmiennoœæ opisuj¹cych (œredna/odchylenie stanadrdowe)');
+% G³êbokie myœlenie = prezentacja danych + wyobra¿enia
 kol1 = 'r*'; if(Ldanych > 80) kol1 = 'r.'; end
 figure(2), subplot(2, 1, 1);
 plot(x, Yemp, kol1);  ylabel('[*C]'); title('G³êbokie myœlenie = prezentacja danych + wyobra¿enia'); hold on
@@ -178,7 +175,7 @@ for (t = 1:52)
     Ttyg(t) = Mdt/7;
 end
 Ttyg = Ttyg'; 
-% clipboard ('copy',Ttyg');
+clipboard ('copy',Ttyg');
 return
 [a,fname,c] = fileparts( mfilename('fullpath'));  % nazwa tego m-pliku
 print( strcat(fname,'.png'),'-dpng');              % zapisz ostatn¹ figurê
