@@ -1,4 +1,4 @@
-﻿# KomputeroweSystemySterowania
+﻿# komputeroweSystemySterowaniaLab 2020
  
 ### Tryb obliczeń:
 
