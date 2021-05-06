@@ -11,5 +11,8 @@
 4. synteza regulatora predykcyjnego DMC w pliku RegulPred z wykorzystaniem funkcji SyntDMC(), a następnie symulacja jego pracy: funkcja RegDMC() i Proces()
 
 ---------------------
+ [
+![image](https://user-images.githubusercontent.com/22752828/117308407-cd1a5000-ae81-11eb-83e7-9a76aad479c2.png)
+ ](https://github.com/informacja/KomputeroweSystemySterowania/files/6435014/Wyklad_4.pdf)
  
 Co robi woda we Wszechświecie? Łukasz Lamża https://www.youtube.com/watch?v=NKEYlT7iFAY
