@@ -1,0 +1,18 @@
+function [y,Twg1,Twz1,qwy,Fw,Fwy,rog]=modKotla(T,Twg,Twz,qkal,Fwz,roz)
+global wExp ro0 cw Kkal;
+%CTwz=(qkal/(Fwz*cw)+Twz)/(1+wExp*(Twz-20));
+%Twg0=CTwz*(1-20*wExp)/(1-CTwz*wExp);
+%rog0=ro0/(1+wExp*(Twg-20));
+% (Twg-Twz)=(Twg-T)*(1-exp(-Kkal/(Fw*cw)))]
+rog=ro0/(1+wExp*(Twg-20));
+ro1=ro0/(1+wExp*(Twz-20));
+Fw=Fwzv*(rog*Twg-Twz*roz)/(Twg-Twz);
+qK=exp(-Kkal/(Fw*cw));
+DTgz=(Twg-T)*(1-qK);
+Twz=Twg-DTgz;
+roz1=ro0/(1+wExp*(Twz1-20));
+Fwy=Fwz*(rog/roz1*Twg1-Twz1)/DTgz;
+qK=exp(-Kkal/(Fwy*cw));
+qwy=Fwy*cw*(Twg1-T)*(1-qK);
+y=qkal-qwy;
+return;
