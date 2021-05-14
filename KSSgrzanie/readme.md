@@ -1,4 +1,4 @@
-Program Garznie.m
+# Program Grzanie.m
 
 Informacje o pomieszczeniu:
  - 120 m2  powierzchni
@@ -83,3 +83,6 @@ p - przeregulowanie
 
 wzór funkcji (sgnalizacyjny)
 przepis na obiekt (obserwowalny)
+
+Profil temperaturowy
+![[MATLAB_mLJJEISVzy.png]]
