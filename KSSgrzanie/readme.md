@@ -13,8 +13,8 @@ Informacje o pomieszczeniu:
  - obj w m3
   
 Przebieg symulacji regulacji, zima mroźna do -15 *C 
-![[docs/Pasted image 20210514100906.png]]
-![[docs/Pasted image 20210514100954.png]]
+![[./docs/Pasted image 20210514100906.png]]
+![[./docs/Pasted image 20210514100954.png]]
 
 Model wymennika ciepła 
 ![[docs/Pasted image 20210514101043.png]]
