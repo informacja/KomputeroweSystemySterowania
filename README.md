@@ -1,4 +1,7 @@
-﻿# komputeroweSystemySterowaniaLab 2020
+﻿# komputeroweSystemySterowaniaLab 2021
+ [
+ ![image](https://user-images.githubusercontent.com/22752828/118477557-1767c080-b70f-11eb-8ceb-3c9fb5fa8d27.png)
+](https://docs.google.com/document/d/1_ECmwbJGfR3J5p59g7L4iMCNLD5Wf1--RQ-m_SyMsPk/edit?usp=sharing)
  
 ### Tryb obliczeń:
 
